@@ -5,13 +5,13 @@ var https = require('https')
 // uWaterloo API
 var uwaterlooApi = require('uwaterloo-api');
 var uwclient = new uwaterlooApi({
-    API_KEY: 'UW_API_KEY '
+    API_KEY: '938d42adae6cc93ed580450aef4cdbba '
 });
 
 // Twilio API
 var twilio = require('twilio')
-const accountSid = 'TWILIO_ACCOUNT_SID'; // Your Account SID from www.twilio.com/console
-const authToken = 'TWILIO_AUTH_TOKEN';   // Your Auth Token from www.twilio.com/console
+const accountSid = 'AC72d0a66b0b780c3ce7dfac28cc666a4e'; // Your Account SID from www.twilio.com/console
+const authToken = 'c97709b9e2b55ab840f0477b446daac8';   // Your Auth Token from www.twilio.com/console
 
 const PORT = process.env.PORT || 3000;
 
@@ -36,9 +36,7 @@ function checkOpenSpot (courseNumber) {
                 console.log(`Course number ${courseNumber} has an open spot!`);
                 sendSMS(`Course number ${courseNumber} has an open spot!`);
             }
-            else {
-                checkOpenSpot(courseNumber);
-            }
+            checkOpenSpot(courseNumber);
         });
     }, 600000); // Every 10 minutes
 }
@@ -59,8 +57,8 @@ function sendSMS (message) {
 
     client.messages.create({
         body: message,
-        to: '+OWNER_NUMBER',  // Text this number
-        from: '+TWILIO_NUMBER ' // From a valid Twilio number
+        to: '+16479603998',  // Text this number
+        from: '+16476976310 ' // From a valid Twilio number
     })
     .then((message) => console.log(`Message successfuly sent (${message.sid}`));
 }
@@ -85,5 +83,5 @@ function heroku_stayAlive() {
 
 checkOpenSpot(5718);
 checkOpenSpot(5720);
-checkIn();
+//checkIn();
 heroku_stayAlive();
