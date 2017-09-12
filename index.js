@@ -38,7 +38,7 @@ function checkOpenSpot (courseNumber) {
             }
             checkOpenSpot(courseNumber);
         });
-    }, 600000); // Every 10 minutes
+    }, 300000); // Every 10 minutes
 }
 
 // checkIn: Sends a text message every so often to remind
