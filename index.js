@@ -38,7 +38,7 @@ function checkOpenSpot (courseNumber) {
             }
             checkOpenSpot(courseNumber);
         });
-    }, 300000); // Every 10 minutes
+    }, 300000); // Every 5 minutes
 }
 
 // checkIn: Sends a text message every so often to remind
@@ -81,7 +81,7 @@ function heroku_stayAlive() {
     }, 60000);  // Every minute
 }
 
-checkOpenSpot(5718);
-checkOpenSpot(5720);
+//checkOpenSpot(5718);
+//checkOpenSpot(5720);
 //checkIn();
-heroku_stayAlive();
+//heroku_stayAlive();
