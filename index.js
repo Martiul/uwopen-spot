@@ -1,17 +1,19 @@
 var express = require('express');
 var app = express();
 var https = require('https')
+var pws = require('./resources/pws.js');
+var phones = require('./resources/phones.js')
 
 // uWaterloo API
 var uwaterlooApi = require('uwaterloo-api');
 var uwclient = new uwaterlooApi({
-    API_KEY: '938d42adae6cc93ed580450aef4cdbba '
+    API_KEY: pws.uwAPIKey
 });
 
 // Twilio API
 var twilio = require('twilio')
-const accountSid = 'AC72d0a66b0b780c3ce7dfac28cc666a4e'; // Your Account SID from www.twilio.com/console
-const authToken = 'c97709b9e2b55ab840f0477b446daac8';   // Your Auth Token from www.twilio.com/console
+const accountSid = pws.accountSid; // Your Account SID from www.twilio.com/console
+const authToken = pws.authToken;   // Your Auth Token from www.twilio.com/console
 
 const PORT = process.env.PORT || 3000;
 
@@ -32,7 +34,7 @@ function checkOpenSpot (courseNumber) {
         uwclient.get(`/courses/${courseNumber}/schedule`, (err, res) => {
             let spaces = res.data[0].enrollment_capacity - res.data[0].enrollment_total;
             console.log(`${courseNumber} has ${spaces} open spaces`);
-            if (spaces != 0) {
+            if (spaces > 0) {
                 console.log(`Course number ${courseNumber} has an open spot!`);
                 sendSMS(`Course number ${courseNumber} has an open spot!`);
             }
@@ -57,8 +59,8 @@ function sendSMS (message) {
 
     client.messages.create({
         body: message,
-        to: '+16479603998',  // Text this number
-        from: '+16476976310 ' // From a valid Twilio number
+        to: phones.toNumber,    // Text this number
+        from: phones.fromNumber  // From a valid Twilio number
     })
     .then((message) => console.log(`Message successfuly sent (${message.sid}`));
 }
@@ -81,7 +83,8 @@ function heroku_stayAlive() {
     }, 60000);  // Every minute
 }
 
-//checkOpenSpot(5718);
+checkOpenSpot(3771);
 //checkOpenSpot(5720);
-//checkIn();
+// checkIn();
+// sendSMS("hello world!");
 //heroku_stayAlive();
